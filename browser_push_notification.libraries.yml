@@ -1,0 +1,13 @@
+service-worker:
+  version: 1.x
+  js:
+    js/encryption/helpers.js: {}
+    js/encryption/encryption-factory.js: {}
+    js/push-client.js: {}
+    js/app-controller.js: {}
+    js/main.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.cookie
+    - core/ajax
+
