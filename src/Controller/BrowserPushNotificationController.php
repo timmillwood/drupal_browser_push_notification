@@ -56,7 +56,7 @@ class BrowserPushNotificationController extends ControllerBase {
    */
   
   public function subscribe(Request $request) {
-    
+    $notification_send = null;
     $data['Authorization'] = $request->get('authorization');;
     $data['cryptokey'] = $request->get('cryptokey');
     $entry['subscription_endpoint'] = $request->get('endpoint');
