@@ -121,7 +121,7 @@ class PushNotificationForm extends FormBase {
             [$subscriptions],
           ],
         ],
-        'finished' => '\Drupal\browser_push_notification\Model\SubscriptionsDatastorage::sendNotificationFinished',
+        'finished' => '\Drupal\browser_push_notification\Model\SubscriptionsDatastorage::notificationFinished',
       ];
       batch_set($batch);
     }

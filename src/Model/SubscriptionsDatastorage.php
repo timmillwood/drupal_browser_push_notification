@@ -46,7 +46,7 @@ class SubscriptionsDatastorage {
     return $return_value;
   }
 
-  /*
+  /**
    * Load all client subscription details to send notification
    */
   public static function loadAll() {
@@ -56,7 +56,7 @@ class SubscriptionsDatastorage {
     return $select->execute()->fetchAll();
   }
   
-  /*
+  /**
    * Batch process to start subscription
    *
    * @param array $subscriptionData  
@@ -75,12 +75,12 @@ class SubscriptionsDatastorage {
     }
   }
 
-  /*
+  /**
    * Load all client subscription details to send notification
    *
    * @param string $authorization  
    *  authorization key of subscribed browers.
-   
+   * 
    * @param string $crypto_key
    *  authorization Crypto-Key
    * 
@@ -90,12 +90,12 @@ class SubscriptionsDatastorage {
    */
   public function sendNotification($authorization, $crypto_key, $endpoint) {
     $ch = curl_init($endpoint);
-    curl_setopt($ch, CURLOPT_POST, 1); // -X
-    curl_setopt($ch, CURLOPT_BINARYTRANSFER, TRUE); // --data-binary
+    curl_setopt($ch, CURLOPT_POST, 1); 
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER, TRUE); 
     $auth = "Authorization: $authorization";
     $cry_key = "Crypto-Key: $crypto_key";
     curl_setopt($ch, CURLOPT_HTTPHEADER, array($auth, "TTL: 60", $cry_key, "Content-Length:0"));
-    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0); // -0
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0); 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
     $send = curl_exec($ch);
@@ -103,11 +103,11 @@ class SubscriptionsDatastorage {
     return $send;
   }
 
-  /*
+  /**
    * Batch End process
    *
    */
-  public function NotificationFinished() {
+  public function notificationFinished() {
     return true;
   }
   
