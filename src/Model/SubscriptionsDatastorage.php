@@ -22,16 +22,15 @@ class SubscriptionsDatastorage {
    * @throws \Exception
    *   When the database insert fails.
    */
-  
   public static function insert(array $entry) {
     $return_value = NULL;
     $arguments = array();
     $arguments[':endpoint'] = $entry['subscription_endpoint'];
     $subscription_exist = db_select(self::$browserSubscriptionTable)
-        ->fields('browser_subscriptions')
-        ->where('subscription_endpoint=:endpoint', $arguments)
-        ->execute()
-        ->fetchAll();
+      ->fields('browser_subscriptions')
+      ->where('subscription_endpoint=:endpoint', $arguments)
+      ->execute()
+      ->fetchAll();
     if ($subscription_exist) {
       return $subscription_exist;
     }
@@ -41,11 +40,8 @@ class SubscriptionsDatastorage {
           ->execute();
     }
     catch (\Exception $e) {
-      drupal_set_message(t('db_insert failed. Message = %message, query= %query', array(
-        '%message' => $e->getMessage(),
-        '%query' => $e->query_string,
-              )
-          ), 'error');
+      drupal_set_message(t('db_insert failed. Message = %message, query= %query', 
+      array('%message' => $e->getMessage(),'%query' => $e->query_string,)), 'error');
     }
     return $return_value;
   }
@@ -114,4 +110,5 @@ class SubscriptionsDatastorage {
   public function NotificationFinished() {
     return true;
   }
+  
 }
