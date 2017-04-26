@@ -10,19 +10,18 @@ namespace Drupal\browser_push_notification\Model;
 class SubscriptionsDatastorage {
   public static $browserSubscriptionTable = 'browser_subscriptions';
   public static $browserSubscriptionCount = 5;
-  
-   /**
-   * Save an entry in the database.
-   *
-   * @param array $entry
-   *   An array containing all the fields of the database record.
-   *
-   * @return int
-   *   The number of updated rows.
-   *
-   * @throws \Exception
-   *   When the database insert fails.
-   */
+  /**
+  * Save an entry in the database.
+  *
+  * @param array $entry
+  *   An array containing all the fields of the database record.
+  *
+  * @return int
+  *   The number of updated rows.
+  *
+  * @throws \Exception
+  *   When the database insert fails.
+  */
 
   public static function insert(array $entry) {
     $return_value = NULL;
