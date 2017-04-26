@@ -10,26 +10,26 @@ namespace Drupal\browser_push_notification\Model;
 class SubscriptionsDatastorage {
   public static $browserSubscriptionTable = 'browser_subscriptions';
   public static $browserSubscriptionCount = 5;
-  /**
-   * Save an entry in the database.
-   *
-   * @param array $entry
-   *   An array containing all the fields of the database record.
-   *
-   * @return int
-   *   The number of updated rows.
-   *
-   * @throws \Exception
-   *   When the database insert fails.
-   */
+ /**
+  * Save an entry in the database.
+  *
+  * @param array $entry
+  *   An array containing all the fields of the database record.
+  *
+  * @return int
+  *   The number of updated rows.
+  *
+  * @throws \Exception
+  *   When the database insert fails.
+  */
   public static function insert(array $entry) {
     $return_value = NULL;
     $arguments = array(':endpoint' => "$entry[subscription_endpoint]");
     $subscription_exist = db_select(self::$browserSubscriptionTable)
-    ->fields('browser_subscriptions')
-    ->where('subscription_endpoint=:endpoint',$arguments)
-    ->execute()
-     ->fetchAll();
+        ->fields('browser_subscriptions')
+        ->where('subscription_endpoint=:endpoint', $arguments)
+        ->execute()
+        ->fetchAll();
     if ($subscription_exist) {
       return $subscription_exist;
     }
