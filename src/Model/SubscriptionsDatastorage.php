@@ -7,11 +7,10 @@ namespace Drupal\browser_push_notification\Model;
  *
  * @package Drupal\browser_push_notification\Model
  */
-class SubscriptionsDatastorage
-{
-    public static $browserSubscriptionTable = 'browser_subscriptions';
-    public static $browserSubscriptionCount = 5;
-    /**
+class SubscriptionsDatastorage {
+  public static $browserSubscriptionTable = 'browser_subscriptions';
+  public static $browserSubscriptionCount = 5;
+  /**
    * Save an entry in the database.
    *
    * @param array $entry
@@ -23,75 +22,64 @@ class SubscriptionsDatastorage
    * @throws \Exception
    *   When the database insert fails.
    */
-    public static function insert(array $entry) 
-    {
-        $return_value = null;
-        $arguments = array();
-        $arguments[':endpoint'] = $entry['subscription_endpoint'];
-        $subscription_exist = db_select(self::$browserSubscriptionTable)
-        ->fields('browser_subscriptions')
-        ->where('subscription_endpoint=:endpoint', $arguments)
-        ->execute()
-        ->fetchAll();
-        if ($subscription_exist) {
-            return $subscription_exist;
-        }
-        try {
-            $return_value = db_insert('browser_subscriptions')
-              ->fields($entry)
-              ->execute();
-        }
-        catch (\Exception $e) {
-            drupal_set_message(
-                t(
-                    'db_insert failed. Message = %message, query= %query', 
-                    array('%message' => $e->getMessage(), '%query' => $e->query_string)
-                ), 'error'
-            );
-        }
-        return $return_value;
+  public static function insert(array $entry) {
+    $return_value = NULL;
+    $arguments = array();
+    $arguments[':endpoint'] = $entry['subscription_endpoint'];
+    $subscription_exist = db_select(self::$browserSubscriptionTable)
+      ->fields('browser_subscriptions')
+      ->where('subscription_endpoint=:endpoint', $arguments)
+      ->execute()
+      ->fetchAll();
+    if ($subscription_exist) {
+      return $subscription_exist;
     }
+    try {
+      $return_value = db_insert('browser_subscriptions')
+          ->fields($entry)
+          ->execute();
+    }
+    catch (\Exception $e) {
+      drupal_set_message(t('db_insert failed. Message = %message, query= %query', 
+      array('%message' => $e->getMessage(),'%query' => $e->query_string,)), 'error');
+    }
+    return $return_value;
+  }
 
-   /**
-   *  Load all client subscription details to send notification
+  /*
+   * Load all client subscription details to send notification
    */
-    public static function loadAll() 
-    {
-        // Read all fields from the browser_subscriptions table.
-        $select = db_select(self::$browserSubscriptionTable, 'browser_subscriptions');
-        $select->fields('browser_subscriptions');
-        return $select->execute()->fetchAll();
-    }
+  public static function loadAll() {
+    // Read all fields from the browser_subscriptions table.
+    $select = db_select(self::$browserSubscriptionTable, 'browser_subscriptions');
+    $select->fields('browser_subscriptions');
+    return $select->execute()->fetchAll();
+  }
   
-    /**
+  /*
    * Batch process to start subscription
    *
    * @param array $subscriptionData  
    */
-    public function sendNotificationStart($subscriptionData) 
-    {
-        if (!empty($subscriptionData)) {
-            foreach ($subscriptionData as $subscription) {
-                $subscription_data = unserialize($subscription->subscription_data);
-                $authorization = $subscription_data['auth'];
-                $crypto_key = $subscription_data['crypto_key'];
-                $subscription_endpoint = $subscription->subscription_endpoint;
-                if (!empty($authorization) && !empty($crypto_key) && !empty($subscription_endpoint)) {
-                    self::sendNotification($authorization, $crypto_key, $subscription_endpoint);
-                }
-            }
+  public function sendNotificationStart($subscriptionData) {
+    if (!empty($subscriptionData)) {
+      foreach ($subscriptionData as $subscription) {
+        $subscription_data = unserialize($subscription->subscription_data);
+        $authorization = $subscription_data['auth'];
+        $crypto_key = $subscription_data['crypto_key'];
+        $subscription_endpoint = $subscription->subscription_endpoint;
+        if (!empty($authorization) && !empty($crypto_key) && !empty($subscription_endpoint)) {
+          self::sendNotification($authorization, $crypto_key, $subscription_endpoint);
         }
+      }
     }
+  }
 
-    /**
+  /*
    * Load all client subscription details to send notification
    *
-   * @param string $authorization 
-   *                              authorization
-   *                              key
-   *                              of
-   *                              subscribed
-   *                              browers.
+   * @param string $authorization  
+   *  authorization key of subscribed browers.
    
    * @param string $crypto_key
    *  authorization Crypto-Key
@@ -100,28 +88,27 @@ class SubscriptionsDatastorage
    * 
    *  Endpoint of subscription
    */
-    public function sendNotification($authorization, $crypto_key, $endpoint) 
-    {
-        $ch = curl_init($endpoint);
-        curl_setopt($ch, CURLOPT_POST, 1); // -X
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true); // --data-binary
-        $auth = "Authorization: $authorization";
-        $cry_key = "Crypto-Key: $crypto_key";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array($auth, "TTL: 60", $cry_key, "Content-Length:0"));
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0); // -0
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        $send = curl_exec($ch);
-        curl_close($ch);
-        return $send;
-    }
+  public function sendNotification($authorization, $crypto_key, $endpoint) {
+    $ch = curl_init($endpoint);
+    curl_setopt($ch, CURLOPT_POST, 1); // -X
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER, TRUE); // --data-binary
+    $auth = "Authorization: $authorization";
+    $cry_key = "Crypto-Key: $crypto_key";
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($auth, "TTL: 60", $cry_key, "Content-Length:0"));
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0); // -0
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+    $send = curl_exec($ch);
+    curl_close($ch);
+    return $send;
+  }
 
-    /**
+  /*
    * Batch End process
+   *
    */
-    public function NotificationFinished() 
-    {
-        return true;
-    }
+  public function NotificationFinished() {
+    return true;
+  }
   
 }
