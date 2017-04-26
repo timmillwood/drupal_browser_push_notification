@@ -21,10 +21,12 @@ class SubscriptionsDatastorage {
    *
    * @throws \Exception
    *   When the database insert fails.
-  */
+   */
+  
   public static function insert(array $entry) {
     $return_value = NULL;
-    $arguments = array(':endpoint' => "$entry[subscription_endpoint]");
+    $arguments = array();
+    $arguments[':endpoint'] = $entry['subscription_endpoint'];
     $subscription_exist = db_select(self::$browserSubscriptionTable)
         ->fields('browser_subscriptions')
         ->where('subscription_endpoint=:endpoint', $arguments)
