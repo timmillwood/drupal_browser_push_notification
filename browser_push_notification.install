@@ -83,7 +83,7 @@ function browser_push_notification_schema() {
         'type' => 'varchar',
         'size' => 'normal',
         'length' => 500,
-        'not null' => TRUE,    
+        'not null' => TRUE,
       ],
       'uid' => [
         'description' => 'Stores userid of created user.',
@@ -95,7 +95,7 @@ function browser_push_notification_schema() {
         'description' => 'Created date.',
         'type' => 'int',
         'size' => 'normal',
-        'not null' => TRUE,    
+        'not null' => TRUE,   
       ],
     ],
     'primary key' => ['id'],
