@@ -8,7 +8,6 @@ namespace Drupal\browser_push_notification\Model;
  * @package Drupal\browser_push_notification\Model
  */
 class SubscriptionsDatastorage {
-  
   public static $browserSubscriptionTable = 'browser_subscriptions';
   public static $browserSubscriptionCount = 5;
   
@@ -25,14 +24,14 @@ class SubscriptionsDatastorage {
    *   When the database insert fails.
    */
 
-  public static function insert($entry) {
+  public static function insert(array $entry) {
     $return_value = NULL;
-    $arguments = array(':endpoint' =>"$entry[subscription_endpoint]");
-    $subscription_exist =  db_select(self::$browserSubscriptionTable)
-          ->fields('browser_subscriptions')
-          ->where('subscription_endpoint=:endpoint',$arguments)
-          ->execute()
-          ->fetchAll();
+    $arguments = array(':endpoint' => "$entry[subscription_endpoint]");
+    $subscription_exist = db_select(self::$browserSubscriptionTable)
+    ->fields('browser_subscriptions')
+    ->where('subscription_endpoint=:endpoint',$arguments)
+    ->execute()
+     ->fetchAll();
     if ($subscription_exist) {
       return $subscription_exist;
     }
@@ -54,7 +53,6 @@ class SubscriptionsDatastorage {
   /*
    * Load all client subscription details to send notification
    */
-  
   public static function loadAll() {
     // Read all fields from the browser_subscriptions table.
     $select = db_select(self::$browserSubscriptionTable, 'browser_subscriptions');
@@ -62,27 +60,26 @@ class SubscriptionsDatastorage {
     return $select->execute()->fetchAll();
   }
   
-   /*
+  /*
    * Batch process to start subscription
    *
    * @param array $subscriptionData  
-   */
-  
+  */
   public function sendNotificationStart($subscriptionData) {
     if (!empty($subscriptionData)) {
-      foreach ($subscriptionData as  $subscription) {
+      foreach ($subscriptionData as $subscription) {
         $subscription_data = unserialize($subscription->subscription_data);
         $authorization = $subscription_data['auth'];
         $crypto_key = $subscription_data['crypto_key'];
         $subscription_endpoint = $subscription->subscription_endpoint;
         if (!empty($authorization) && !empty($crypto_key) && !empty($subscription_endpoint)) {
-            self::sendNotification($authorization, $crypto_key, $subscription_endpoint);
+          self::sendNotification($authorization, $crypto_key, $subscription_endpoint);
         }
       }
     }
   }
 
-   /*
+  /*
    * Load all client subscription details to send notification
    *
    * @param string $authorization  
@@ -95,7 +92,6 @@ class SubscriptionsDatastorage {
    * 
    *  Endpoint of subscription
    */
-  
   public function sendNotification($authorization, $crypto_key, $endpoint) {
     $ch = curl_init($endpoint);
     curl_setopt($ch, CURLOPT_POST, 1); // -X
@@ -110,12 +106,11 @@ class SubscriptionsDatastorage {
     curl_close($ch);
     return $send;
   }
-  
+
   /*
    * Batch End process
    *
    */
-  
   public function NotificationFinished() {
     return true;
   }
