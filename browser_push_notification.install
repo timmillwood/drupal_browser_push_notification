@@ -44,12 +44,10 @@ function browser_push_notification_schema() {
         'type' => 'int',
         'size' => 'normal',
         'not null' => TRUE,
-        
       ],
     ],
     'primary key' => ['id'],
   ];
-  
   $schema['browser_notifications'] = [
     'description' => 'The base table for storing browser notification details',
     'fields' => [
@@ -87,7 +85,6 @@ function browser_push_notification_schema() {
         'length' => 500,
         'not null' => TRUE,    
       ],
-      
       'uid' => [
         'description' => 'Stores userid of created user.',
         'type' => 'int',
@@ -103,7 +100,5 @@ function browser_push_notification_schema() {
     ],
     'primary key' => ['id'],
   ];
-  
   return $schema;
 }
-
