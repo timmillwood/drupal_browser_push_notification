@@ -10,4 +10,4 @@ service-worker:
     - core/jquery
     - core/jquery.cookie
     - core/ajax
-
+    
