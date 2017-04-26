@@ -95,7 +95,7 @@ function browser_push_notification_schema() {
         'description' => 'Created date.',
         'type' => 'int',
         'size' => 'normal',
-        'not null' => TRUE,   
+        'not null' => TRUE,\
       ],
     ],
     'primary key' => ['id'],
