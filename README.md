@@ -14,7 +14,7 @@ INTRODUCTION
 ------------
 
 The Browser Push Notification module send push notification to web browsers
-using PUSH WebApi and service-worker.
+using Push Api and service-worker.
 
  * For a full description of the module, visit the project page:
    https://drupal.org/project/browser_push_notification
@@ -54,7 +54,23 @@ INSTALLATION
 
 CONFIGURATION
 -------------
- 
+ Browser Push Notification module have below configuration setting page
+
+ * Using this URL you have to save application public key & private key.
+   admin/config/services/browser_push_notification/config. Copy key from
+   https://web-push-codelab.appspot.com
+
+ * Using the below URL you can send the notification to every user
+   who have enabled the browser push notification in browser for your site.
+   /admin/config/services/browser_push_notification/send_notification
+
+ * Using the Below URL user can check the list of the User who have subscribed
+   browser push notification.
+   /admin/config/services/browser_push_notification/subscription_list
+
+ * Using the permission 'Administer Browser Push Notification',
+   User with administer permission will be able to manage  configuration and send push notification.  
+
  
 
 TROUBLESHOOTING
