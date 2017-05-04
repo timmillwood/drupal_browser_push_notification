@@ -61,7 +61,7 @@ class PushNotificationForm extends FormBase {
       '#type' => 'textarea',
       '#required' => TRUE,
       '#title' => $this->t('Notification Message'),
-      '#maxlength' => 150,
+      '#maxlength' => 300,
       '#description' => $this->t('Enter the Message of the Notification.'),
     ];
 
@@ -91,7 +91,12 @@ class PushNotificationForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    return TRUE;
+    if (!(filter_var($form_state->getValue('url'), FILTER_VALIDATE_URL))) {
+      $form_state->setErrorByName('url', t('Not a valid url.'));
+    }
+    if (!(filter_var($form_state->getValue('icon'), FILTER_VALIDATE_URL))) {
+      $form_state->setErrorByName('icon', t('Not a valid image url.'));
+    }
   }
 
   /**
@@ -112,7 +117,12 @@ class PushNotificationForm extends FormBase {
     $notification_data .= $entry['icon'] . '<br>';
     $notification_data .= $entry['url'] . '<br>';
     $subscriptions = SubscriptionsDatastorage::loadAll();
-    if (!empty($subscriptions)) {
+    $bpn_public_key = \Drupal::config('browser_push_notification.settings')->get('bpn_public_key');
+    $bpn_private_key = \Drupal::config('browser_push_notification.settings')->get('bpn_private_key');
+    if (empty($bpn_public_key) && empty($bpn_private_key)) {
+      drupal_set_message($this->t('Please set public & private key.'), 'error');
+    }
+    if (!empty($subscriptions) && !empty($bpn_public_key) && !empty($bpn_private_key)) {
       $batch = [
         'title' => $this->t('Sending Push Notification...'),
         'operations' => [
@@ -125,6 +135,9 @@ class PushNotificationForm extends FormBase {
       ];
       batch_set($batch);
       drupal_set_message($this->t('Push notification sent successfully to  @entry users', ['@entry' => print_r(count($subscriptions), TRUE)]));
+    }
+    else {
+      drupal_set_message($this->t('Subscription list is empty.'), 'error');
     }
   }
 

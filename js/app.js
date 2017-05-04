@@ -5,10 +5,16 @@
 
 (function ($, window, Drupal, drupalSettings) {
   'use strict';
+  var public_key = drupalSettings.browser_push_notification.bpn_public_key;
+  console.log(public_key);
   var baseUrl = (window.location.protocol + "//" + window.location.host) + (drupalSettings.path.baseUrl);
   Drupal.behaviors.browser_push_notification = { // The name of our behavior.
     attach: function (context, settings) {
-        const applicationServerKey = "BIXBbIYTKzEKNcqPAl0Fd_dr3sbaEcopouEwedwA7hVW-swUttRDRDVDT1W_rSngFTTF9IsFECYYKIgXEnBO1TE";
+        var applicationServerKey = public_key;
+        if (!(applicationServerKey)) {
+        console.warn("applicationServerKey empty");
+        return;
+    }
          if (!('serviceWorker' in navigator)) {
         console.warn("Service workers are not supported by this browser");
         return;

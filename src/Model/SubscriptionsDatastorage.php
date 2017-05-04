@@ -74,12 +74,14 @@ class SubscriptionsDatastorage {
         $subscription_endpoint = $subscription->subscription_endpoint;
         $key = $subscription_data['key'];
         $token = $subscription_data['token'];
+        $bpn_public_key = \Drupal::config('browser_push_notification.settings')->get('bpn_public_key');
+        $bpn_private_key = \Drupal::config('browser_push_notification.settings')->get('bpn_private_key');
         if (!empty($key) && !empty($token) && !empty($subscription_endpoint)) {
           $auth = [
             'VAPID' => [
               'subject' => 'https://github.com/Minishlink/web-push-php-example/',
-              'publicKey' => 'BIXBbIYTKzEKNcqPAl0Fd_dr3sbaEcopouEwedwA7hVW-swUttRDRDVDT1W_rSngFTTF9IsFECYYKIgXEnBO1TE',
-              'privateKey' => 'HfM1Sx8iQOTHRPvFfPMjkWwVJQpwP_iCiGuiCSbjYRM',
+              'publicKey' => $bpn_public_key,
+              'privateKey' => $bpn_private_key,
             ],
           ];
           $webPush = new WebPush($auth);
