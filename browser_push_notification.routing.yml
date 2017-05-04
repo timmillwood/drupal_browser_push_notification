@@ -4,7 +4,7 @@ browser_push_notification.send_notification:
     _form: '\Drupal\browser_push_notification\Form\PushNotificationForm'
     _title: 'Browser Push Notification'
   requirements:
-    _permission: 'Browser Push Notification' 
+    _permission: 'administer browser push notification' 
   options:
     _admin_route: TRUE
 
@@ -14,7 +14,7 @@ browser_push_notification.config:
     _form: '\Drupal\browser_push_notification\Form\PushNotificationConfigForm'
     _title: 'Browser Push Notification Configurations'
   requirements:
-    _permission: 'Browser Push Notification' 
+    _permission: 'administer browser push notification' 
   options:
     _admin_route: TRUE    
 
@@ -24,7 +24,7 @@ browser_push_notification.subscription_list:
     _controller: '\Drupal\browser_push_notification\Controller\BrowserPushNotificationController::subscriptionList'
     _title: 'Browser Push Notification Subscription List'
   requirements:
-    _permission: 'Browser Push Notification'
+    _permission: 'administer browser push notification' 
   options:
     _admin_route: TRUE
 

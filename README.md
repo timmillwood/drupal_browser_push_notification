@@ -1,33 +1,72 @@
-Browser Push Notification
-===================
+CONTENTS OF THIS FILE
+---------------------
+   
+ * Introduction
+ * Requirements
+ * Recommended modules
+ * Installation
+ * Configuration
+ * Troubleshooting
+ * FAQ
+ * Maintainers
 
-This module will send push notification to browsers using Push WebApi 
-and service-worker.
-It will work only in Html5 supported Chrome and Firefox browsers.
+INTRODUCTION
+------------
 
-REQUIREMENTS:
---------------
-PHP 5.6
-gmp
-mbstring
-curl
-openssl
-PHP 7.1 is recommended for better performance.
+The Browser Push Notification module send push notification to web browsers
+using PUSH WebApi and service-worker.
 
-INSTRUCTIONS:
---------------
+ * For a full description of the module, visit the project page:
+   https://drupal.org/project/browser_push_notification
 
-1. Site should be have the SSL certificate because service-worker
-   will works only in secure domains.
-2. Install dependent library web push 
+ * To submit bug reports and feature suggestions, or to track changes:
+   https://drupal.org/project/issues/browser_push_notification
+
+REQUIREMENTS
+------------
+
+  - SSL certificate is mandatory : Push notification will only work on domain with 
+SSL enabled.
+
+  - Web Push library for PHP (https://github.com/web-push-libs/web-push-php)
+
+  - Only supported in following Web Browsers:
+    - Chrome:42 or Above
+    - Firefox:44 or Above
+
+INSTALLATION
+------------
+
+ * Step 1: Install dependent library web push 
    composer require minishlink/web-push. For more details 
    https://github.com/web-push-libs/web-push-php
-3. Enable the module browser_push_notification.
-4. Copy js/serviceWorker.js into root of the drupal installation
-   eg:https://test.com/serviceWorker.js
-5. Copy Application Publick Key & Private Key from 
-   https://web-push-codelab.appspot.com and set it in 
-   browser push notification config settings form.  
-6. Browser compatibility
-   Chrome:42+
-   Firefox:44+
+
+ * Step 2: Install as you would normally install a contributed Drupal module. 
+   See: https://www.drupal.org/docs/8/extending-drupal-8/installing-modules
+   for further information.
+
+ * Step 3: Copy js/serviceWorker.js into root of the drupal installation
+   Eg:https://www.example.com/serviceWorker.js
+
+ * Step 4: Copy Application Publick Key & Private Key from 
+   https://web-push-codelab.appspot.com and set it in browser push notification
+   config settings form.  
+
+CONFIGURATION
+-------------
+ 
+ 
+
+TROUBLESHOOTING
+---------------
+
+
+MAINTAINERS
+-----------
+
+Current maintainers:
+ * Shylaja r (shylajaphp) - https://www.drupal.org/u/shylajaphp
+
+This project has been sponsored by:
+ * Iksula Services
+   Visit https://www.iksula.com for more information.
