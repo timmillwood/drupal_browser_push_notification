@@ -7,5 +7,3 @@ browser_push_notification.subscription_list:
   route_name: browser_push_notification.subscription_list
   base_route: browser_push_notification.send_notification
   title: 'Browser Push Notification Subscription List'
-
-  

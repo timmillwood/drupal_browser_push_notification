@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Connection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\browser_push_notification\Model\SubscriptionsDatastorage;
-use Drupal\browser_push_notification\Model\NotificationsDatastorage;
 
 /**
  * Class PushNotificationForm.
@@ -49,7 +48,7 @@ class PushNotificationForm extends FormBase {
     $form['sendMessage'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Browser Notification Details'),
-     ];
+    ];
     $form['sendMessage']['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Notification Title'),
@@ -57,7 +56,7 @@ class PushNotificationForm extends FormBase {
       '#size' => 100,
       '#description' => $this->t('Enter the Title of the Notification.'),
     ];
-    
+
     $form['sendMessage']['body'] = [
       '#type' => 'textarea',
       '#required' => TRUE,
@@ -79,12 +78,12 @@ class PushNotificationForm extends FormBase {
       '#title' => $this->t('Notification URL'),
       '#description' => $this->t('Enter the URL on which user will redirect after clicking on Notification.Eg.http://example.com/test-contents'),
     ];
-    
-    $form['sendMessage']['submit'] = array(
+
+    $form['sendMessage']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Send Notification'),
-    );
-       
+    ];
+
     return $form;
   }
 
@@ -99,18 +98,19 @@ class PushNotificationForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Store the notification values in browser_notification table to trigger notification
     $account = $this->currentUser();
-    // Save the submitted entry.
-    $entry = array(
+    $entry = [
       'title' => $form_state->getValue('title'),
       'body' => $form_state->getValue('body'),
       'icon' => $form_state->getValue('icon'),
       'url' => $form_state->getValue('url'),
       'created_date' => strtotime(date('Y-m-d H:i:s')),
       'uid' => $account->id(),
-    );
-    $return = NotificationsDatastorage::insert($entry);
+    ];
+    $notification_data = $entry['title'] . '<br>';
+    $notification_data .= $entry['body'] . '<br>';
+    $notification_data .= $entry['icon'] . '<br>';
+    $notification_data .= $entry['url'] . '<br>';
     $subscriptions = SubscriptionsDatastorage::loadAll();
     if (!empty($subscriptions)) {
       $batch = [
@@ -118,15 +118,13 @@ class PushNotificationForm extends FormBase {
         'operations' => [
           [
             '\Drupal\browser_push_notification\Model\SubscriptionsDatastorage::sendNotificationStart',
-            [$subscriptions],
+            [$subscriptions, $notification_data],
           ],
         ],
         'finished' => '\Drupal\browser_push_notification\Model\SubscriptionsDatastorage::notificationFinished',
       ];
       batch_set($batch);
-    }
-    if ($return) {
-       drupal_set_message($this->t('Push notification sent successfully to  @entry users', array('@entry' => print_r(count($subscriptions), TRUE))));
+      drupal_set_message($this->t('Push notification sent successfully to  @entry users', ['@entry' => print_r(count($subscriptions), TRUE)]));
     }
   }
 
