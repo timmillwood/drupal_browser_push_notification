@@ -11,18 +11,18 @@
     attach: function (context, settings) {
       var applicationServerKey = public_key;
       if (!(applicationServerKey)) {
-          return;
-    }
-         if (!('serviceWorker' in navigator)) {
-          return;
-    }
-    if (!('PushManager' in window)) {
-          return;
-    }
+        return;
+      }
+      if (!('serviceWorker' in navigator)) {
+        return;
+      }
+      if (!('PushManager' in window)) {
+        return;
+      }
 
-    if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
-          return;
-    }
+      if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+        return;
+      }
 
     // Check the current Notification permission.
     // If its denied, the popup should not appears as such, until the user changes the permission manually.
