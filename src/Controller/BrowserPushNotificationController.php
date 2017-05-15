@@ -39,7 +39,6 @@ class BrowserPushNotificationController extends ControllerBase {
   public function subscribe(Request $request) {
     if ($request) {
       $data = json_decode($request->getContent(), TRUE);
-      $notification_send = NULL;
       $entry['subscription_endpoint'] = $data['endpoint'];
       $entry['subscription_data'] = serialize(['key' => $data['key'], 'token' => $data['token']]);
       $entry['registered_on'] = strtotime(date('Y-m-d H:i:s'));

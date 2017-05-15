@@ -92,10 +92,10 @@ class PushNotificationForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     if (!(filter_var($form_state->getValue('url'), FILTER_VALIDATE_URL))) {
-      $form_state->setErrorByName('url', t('Not a valid url.'));
+      $form_state->setErrorByName('url', $this->t('Not a valid url.'));
     }
     if (!(filter_var($form_state->getValue('icon'), FILTER_VALIDATE_URL))) {
-      $form_state->setErrorByName('icon', t('Not a valid image url.'));
+      $form_state->setErrorByName('icon', $this->t('Not a valid image url.'));
     }
   }
 
