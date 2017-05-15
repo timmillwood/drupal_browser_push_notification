@@ -33,4 +33,5 @@ browser_push_notification.subscribe:
   defaults:
     _controller: '\Drupal\browser_push_notification\Controller\BrowserPushNotificationController::subscribe'
   requirements:
+  # Anomynous user can also subscribe for browser push notification    
     _access: 'TRUE'
