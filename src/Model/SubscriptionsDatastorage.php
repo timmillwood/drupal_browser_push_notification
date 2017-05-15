@@ -85,7 +85,7 @@ class SubscriptionsDatastorage {
             ],
           ];
           $webPush = new WebPush($auth);
-          $res = $webPush->sendNotification(
+          $webPush->sendNotification(
           $subscription_endpoint,
           $notification_data,
           $key,
