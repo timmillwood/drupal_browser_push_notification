@@ -26,16 +26,14 @@
 
     // Check the current Notification permission.
     // If its denied, the popup should not appears as such, until the user changes the permission manually.
-    if (Notification.permission === 'denied') {
-          return;
-    }
+      if (Notification.permission === 'denied') {
+        return;
+      }
 
-    navigator.serviceWorker.register(baseUrl + "serviceWorker.js")
-    .then(() => {
-        console.log('[SW] Service worker has been registered');
-    }, e => {
-        console.error('[SW] Service worker registration failed', e);
-    });
+      navigator.serviceWorker.register(baseUrl + "serviceWorker.js")
+      .then(() => {
+      }, e => {
+      });
 
    function urlBase64ToUint8Array(base64String) {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
