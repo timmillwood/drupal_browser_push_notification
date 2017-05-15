@@ -9,30 +9,25 @@
   var baseUrl = (window.location.protocol + '//' + window.location.host) + (drupalSettings.path.baseUrl);
   Drupal.behaviors.browser_push_notification = { // The name of our behavior.
     attach: function (context, settings) {
-        var applicationServerKey = public_key;
-        if (!(applicationServerKey)) {
-        console.warn("applicationServerKey empty");
-        return;
+      var applicationServerKey = public_key;
+      if (!(applicationServerKey)) {
+          return;
     }
          if (!('serviceWorker' in navigator)) {
-        console.warn("Service workers are not supported by this browser");
-        return;
+          return;
     }
     if (!('PushManager' in window)) {
-        console.warn('Push notifications are not supported by this browser');
-        return;
+          return;
     }
 
     if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
-        console.warn('Notifications are not supported by this browser');
-        return;
+          return;
     }
 
     // Check the current Notification permission.
     // If its denied, the popup should not appears as such, until the user changes the permission manually.
     if (Notification.permission === 'denied') {
-        console.warn('Notifications are denied by the user');
-        return;
+          return;
     }
 
     navigator.serviceWorker.register(baseUrl + "serviceWorker.js")
