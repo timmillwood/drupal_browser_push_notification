@@ -12,6 +12,7 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
+
 The Browser Push Notification module send push notification to web browsers
 using Push Api and service-worker.
 
