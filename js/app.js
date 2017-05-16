@@ -127,17 +127,17 @@
             text: Drupal.t('Allow'),
             class: 'button button--allow',
             click: function () {
-                push_updateSubscription();
-                confirmationDialog.close();
-              }
-              },
-              {
-                text: Drupal.t('Later'),
-                class: 'button button--cancel',
-                click: function () {
-                confirmationDialog.close();
-              }
-              }
+              push_updateSubscription();
+              confirmationDialog.close();
+            }
+          },
+          {
+            text: Drupal.t('Later'),
+            class: 'button button--cancel',
+            click: function () {
+              confirmationDialog.close();
+            }
+           }
             ],
           // Prevent this modal from being closed without the user making a choice
           // as per http://stackoverflow.com/a/5438771.
