@@ -104,10 +104,10 @@
         return fetch(subcribe_url, {
           method,
           body: JSON.stringify({
-             endpoint: subscription.endpoint,
-             key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
-             token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null
-           })
+            endpoint: subscription.endpoint,
+            key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+            token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null
+          })
         }) .then((resp) => resp.json()) // Transform the data into json.
             .then(function (data) {
             // Create and append the li's to the ul
@@ -119,46 +119,46 @@
 
          // Notification popup will appear when user allowed notification permission.
       var confirmationDialog = Drupal.dialog('<div class="bpn_message_div" style="display: none !important;"></div>', {
-            title: Drupal.t('Get the latest updates through website notifications?'),
-            dialogClass: 'bpn-model-popup',
-            resizable: false,
-            buttons: [
-            {
-              text: Drupal.t('Allow'),
-              class: 'button button--allow',
-              click: function () {
+        title: Drupal.t('Get the latest updates through website notifications?'),
+        dialogClass: 'bpn-model-popup',
+        resizable: false,
+        buttons: [
+        {
+                text: Drupal.t('Allow'),
+                class: 'button button--allow',
+                click: function () {
                 push_updateSubscription();
                 confirmationDialog.close();
               }
-            },
-            {
-              text: Drupal.t('Later'),
-              class: 'button button--cancel',
-              click: function () {
+              },
+              {
+                text: Drupal.t('Later'),
+                class: 'button button--cancel',
+                click: function () {
                 confirmationDialog.close();
               }
-            }
-          ],
+              }
+            ],
           // Prevent this modal from being closed without the user making a choice
           // as per http://stackoverflow.com/a/5438771.
-            closeOnEscape: false,
-            create: function () {
+        closeOnEscape: false,
+        create: function () {
 
-          },
-            beforeClose: false,
-            close: function (event) {
+            },
+        beforeClose: false,
+        close: function (event) {
             // Automatically destroy the DOM element that was used for the dialog.
             // $(event.target).remove();
-          }
-          });
+            }
+      });
         // Checking if the user is subcribed for notification, if not popup will appear.
       navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
         .then(subscription => {
           if (!subscription) {
                 // We aren't subscribed to push, so enable subscription.
-          confirmationDialog.showModal();
+            confirmationDialog.showModal();
                 // return;.
-         }
+          }
         })
         .then(subscription => subscription)
         .catch(e => {
