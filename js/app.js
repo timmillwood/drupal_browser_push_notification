@@ -77,8 +77,7 @@
                 // changePushButtonState('disabled');.
           }
         });
-      }
-      
+      }      
       function push_updateSubscription() {
         navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
         .then(subscription => {
@@ -86,16 +85,16 @@
                 // We aren't subscribed to push, so enable subscription.
             push_subscribe();
             return;
-           }
+          }
           // Return push_sendSubscriptionToServer(subscription, 'PUT');.
         })
         .then(subscription => subscription) // Set your UI to show they have subscribed for push messages.
         .catch(e => {
             // console.error('Error when updating the subscription', e);
         });
-       }
+      }
     // Sending push subscription to server for storing endpoint,key and token.
-       function push_sendSubscriptionToServer(subscription, method) {
+      function push_sendSubscriptionToServer(subscription, method) {
          const key = subscription.getKey('p256dh');
          const token = subscription.getKey('auth');
         /* console.log(btoa(String.fromCharCode.apply(null, new Uint8Array(key))));
@@ -116,7 +115,7 @@
             }).catch(function (err) {
                                            // console.log(err);
             });
-        }
+      }
 
          // Notification popup will appear when user allowed notification permission.
           var confirmationDialog = Drupal.dialog('<div class="bpn_message_div" style="display: none !important;"></div>', {
