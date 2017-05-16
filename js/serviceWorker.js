@@ -4,7 +4,7 @@
  */
 'use strict';
 self.addEventListener('push', function (event) {
-  'use strict';  
+  'use strict';
   if (!(self.Notification && self.Notification.permission === 'granted')) {
     return;
   }
@@ -31,6 +31,7 @@ self.addEventListener('push', function (event) {
   }
 });
 self.addEventListener('notificationclick', function (event) {
+  'use strict';  
   event.notification.close();
   // console.log('notification click');
   let clickResponsePromise = Promise.resolve();
@@ -40,6 +41,7 @@ self.addEventListener('notificationclick', function (event) {
 });
 
 self.addEventListener('notificationclose', function (event) {
+  'use strict';  
   event.waitUntil(
     Promise.all([
     ])
