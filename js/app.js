@@ -95,21 +95,21 @@
       }
     // Sending push subscription to server for storing endpoint,key and token.
       function push_sendSubscriptionToServer(subscription, method) {
-         const key = subscription.getKey('p256dh');
-         const token = subscription.getKey('auth');
-        /* console.log(btoa(String.fromCharCode.apply(null, new Uint8Array(key))));
-           console.log( btoa(String.fromCharCode.apply(null, new Uint8Array(token))));
-           console.log(subscription.endpoint);*/
-         var subcribe_url = baseUrl + 'subscribe';
-         return fetch(subcribe_url, {
-            method,
-            body: JSON.stringify({
-                endpoint: subscription.endpoint,
-                key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
-                token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null
-            }),
-        }) .then((resp) => resp.json()) // Transform the data into json.
-           .then(function (data) {
+        const key = subscription.getKey('p256dh');
+        const token = subscription.getKey('auth');
+        // console.log(btoa(String.fromCharCode.apply(null, new Uint8Array(key))));
+        // console.log( btoa(String.fromCharCode.apply(null, new Uint8Array(token))));
+        // console.log(subscription.endpoint);
+        var subcribe_url = baseUrl + 'subscribe';
+        return fetch(subcribe_url, {
+           method,
+           body: JSON.stringify({
+              endpoint: subscription.endpoint,
+              key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+              token: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null
+            })
+        })  .then((resp) => resp.json()) // Transform the data into json.
+            .then(function (data) {
             // Create and append the li's to the ul
             // console.log(data);
             }).catch(function (err) {
