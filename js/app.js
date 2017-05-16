@@ -123,10 +123,10 @@
         dialogClass: 'bpn-model-popup',
         resizable: false,
         buttons: [
-        {
-                text: Drupal.t('Allow'),
-                class: 'button button--allow',
-                click: function () {
+          {
+            text: Drupal.t('Allow'),
+            class: 'button button--allow',
+            click: function () {
                 push_updateSubscription();
                 confirmationDialog.close();
               }
