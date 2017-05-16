@@ -36,12 +36,12 @@ self.addEventListener('notificationclick', function (event) {
   // console.log('notification click');
   let clickResponsePromise = Promise.resolve();
   if (event.notification.data && event.notification.data.url) {
-    clickResponsePromise = clients.openWindow(event.notification.data.url);
+    clients.openWindow(event.notification.data.url);
   }
 });
 
 self.addEventListener('notificationclose', function (event) {
-  'use strict';  
+  'use strict';
   event.waitUntil(
     Promise.all([
     ])
