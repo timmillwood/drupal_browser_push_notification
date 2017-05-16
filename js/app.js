@@ -53,54 +53,54 @@
       function push_subscribe() {
         navigator.serviceWorker.ready
         .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(applicationServerKey),
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(applicationServerKey)
         }))
         .then(subscription => {
              // Subscription was successful
             // create subscription on your server.
-            return push_sendSubscriptionToServer(subscription, 'POST');
+          return push_sendSubscriptionToServer(subscription, 'POST');
         })
         .then(subscription => subscription && changePushButtonState('enabled')) // Update your UI.
         .catch(e => {
-        if (Notification.permission === 'denied') {
+          if (Notification.permission === 'denied') {
                 // The user denied the notification permission which
                 // means we failed to subscribe and the user will need
                 // to manually change the notification permission to
                 // subscribe to push messages.
-                //console.warn('Notifications are denied by the user.');
-        }
-        else {
+                // console.warn('Notifications are denied by the user.');
+          }
+          else {
                 // A problem occurred with the subscription; common reasons
                 // include network errors or the user skipped the permission.
-                //console.error('Impossible to subscribe to push notifications', e);
+                // console.error('Impossible to subscribe to push notifications', e);
                 // changePushButtonState('disabled');.
-        }
+          }
         });
-      } 
-
+      }
+      
       function push_updateSubscription() {
         navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
         .then(subscription => {
-         if (!subscription) {
+          if (!subscription) {
                 // We aren't subscribed to push, so enable subscription.
-                push_subscribe();
-                return;
-            }
+            push_subscribe();
+            return;
+           }
           // Return push_sendSubscriptionToServer(subscription, 'PUT');.
         })
         .then(subscription => subscription) // Set your UI to show they have subscribed for push messages.
         .catch(e => {
-            console.error('Error when updating the subscription', e);
+            // console.error('Error when updating the subscription', e);
         });
        }
     // Sending push subscription to server for storing endpoint,key and token.
        function push_sendSubscriptionToServer(subscription, method) {
          const key = subscription.getKey('p256dh');
          const token = subscription.getKey('auth');
-        /*console.log(btoa(String.fromCharCode.apply(null, new Uint8Array(key))));
-        console.log( btoa(String.fromCharCode.apply(null, new Uint8Array(token))));
-        console.log(subscription.endpoint);*/
+        /* console.log(btoa(String.fromCharCode.apply(null, new Uint8Array(key))));
+           console.log( btoa(String.fromCharCode.apply(null, new Uint8Array(token))));
+           console.log(subscription.endpoint);*/
          var subcribe_url = baseUrl + 'subscribe';
          return fetch(subcribe_url, {
             method,
@@ -114,8 +114,8 @@
             // Create and append the li's to the ul
             // console.log(data);
             }).catch(function (err) {
-                                            console.log(err);
-                       });
+                                           // console.log(err);
+            });
         }
 
          // Notification popup will appear when user allowed notification permission.
@@ -155,15 +155,15 @@
         // Checking if the user is subcribed for notification, if not popup will appear.
         navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
         .then(subscription => {
-        if (!subscription) {
+         if (!subscription) {
                 // We aren't subscribed to push, so enable subscription.
                 confirmationDialog.showModal();
                 // return;.
-            }
+         }
         })
         .then(subscription => subscription)
         .catch(e => {
-            console.error('Error when updating the subscription', e);
+            // console.error('Error when updating the subscription', e);
         });
 
     }
