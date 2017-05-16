@@ -137,19 +137,19 @@
             click: function () {
               confirmationDialog.close();
             }
-           }
-            ],
+          }
+        ],
           // Prevent this modal from being closed without the user making a choice
           // as per http://stackoverflow.com/a/5438771.
         closeOnEscape: false,
         create: function () {
 
-            },
+        },
         beforeClose: false,
         close: function (event) {
             // Automatically destroy the DOM element that was used for the dialog.
             // $(event.target).remove();
-            }
+        }
       });
         // Checking if the user is subcribed for notification, if not popup will appear.
       navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
