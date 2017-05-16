@@ -117,8 +117,8 @@ class PushNotificationForm extends FormBase {
     $notification_data .= $entry['icon'] . '<br>';
     $notification_data .= $entry['url'] . '<br>';
     $subscriptions = SubscriptionsDatastorage::loadAll();
-    $bpn_public_key = \Drupal::config('browser_push_notification.settings')->get('bpn_public_key');
-    $bpn_private_key = \Drupal::config('browser_push_notification.settings')->get('bpn_private_key');
+    $bpn_public_key = $this->config('browser_push_notification.settings')->get('bpn_public_key');
+    $bpn_private_key = $this->config('browser_push_notification.settings')->get('bpn_private_key');
     if (empty($bpn_public_key) && empty($bpn_private_key)) {
       drupal_set_message($this->t('Please set public & private key.'), 'error');
     }
