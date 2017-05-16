@@ -31,7 +31,7 @@ self.addEventListener('push', function (event) {
   }
 });
 self.addEventListener('notificationclick', function (event) {
-  'use strict';  
+  'use strict';
   event.notification.close();
   // console.log('notification click');
   Promise.resolve();
