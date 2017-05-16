@@ -77,7 +77,8 @@
                 // changePushButtonState('disabled');.
           }
         });
-      }      
+      }
+      
       function push_updateSubscription() {
         navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
         .then(subscription => {
