@@ -3,6 +3,7 @@
  * Serviceworker file for browser push notification.
  */
 'use strict';
+
 self.addEventListener('push', function (event) {
   'use strict';
   if (!(self.Notification && self.Notification.permission === 'granted')) {
