@@ -34,7 +34,7 @@ self.addEventListener('notificationclick', function (event) {
   'use strict';  
   event.notification.close();
   // console.log('notification click');
-  let clickResponsePromise = Promise.resolve();
+  Promise.resolve();
   if (event.notification.data && event.notification.data.url) {
     clients.openWindow(event.notification.data.url);
   }
