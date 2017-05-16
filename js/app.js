@@ -45,16 +45,16 @@
         const outputArray = new Uint8Array(rawData.length);
 
         for (let i = 0; i < rawData.length; ++i) {
-            outputArray[i] = rawData.charCodeAt(i);
+          outputArray[i] = rawData.charCodeAt(i);
         }
         return outputArray;
       }
      // Sending push subscription.
-    function push_subscribe() {
+      function push_subscribe() {
         navigator.serviceWorker.ready
         .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(applicationServerKey),
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(applicationServerKey),
         }))
         .then(subscription => {
              // Subscription was successful
@@ -63,26 +63,26 @@
         })
         .then(subscription => subscription && changePushButtonState('enabled')) // Update your UI.
         .catch(e => {
-            if (Notification.permission === 'denied') {
+        if (Notification.permission === 'denied') {
                 // The user denied the notification permission which
                 // means we failed to subscribe and the user will need
                 // to manually change the notification permission to
                 // subscribe to push messages.
-                console.warn('Notifications are denied by the user.');
-            }
-else {
+                //console.warn('Notifications are denied by the user.');
+        }
+        else {
                 // A problem occurred with the subscription; common reasons
                 // include network errors or the user skipped the permission.
-                console.error('Impossible to subscribe to push notifications', e);
+                //console.error('Impossible to subscribe to push notifications', e);
                 // changePushButtonState('disabled');.
-            }
+        }
         });
-    }
+      } 
 
-    function push_updateSubscription() {
+      function push_updateSubscription() {
         navigator.serviceWorker.ready.then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
         .then(subscription => {
-        if (!subscription) {
+         if (!subscription) {
                 // We aren't subscribed to push, so enable subscription.
                 push_subscribe();
                 return;
@@ -93,16 +93,16 @@ else {
         .catch(e => {
             console.error('Error when updating the subscription', e);
         });
-    }
+       }
     // Sending push subscription to server for storing endpoint,key and token.
-    function push_sendSubscriptionToServer(subscription, method) {
-        const key = subscription.getKey('p256dh');
-        const token = subscription.getKey('auth');
+       function push_sendSubscriptionToServer(subscription, method) {
+         const key = subscription.getKey('p256dh');
+         const token = subscription.getKey('auth');
         /*console.log(btoa(String.fromCharCode.apply(null, new Uint8Array(key))));
         console.log( btoa(String.fromCharCode.apply(null, new Uint8Array(token))));
         console.log(subscription.endpoint);*/
-        var subcribe_url = baseUrl + 'subscribe';
-        return fetch(subcribe_url, {
+         var subcribe_url = baseUrl + 'subscribe';
+         return fetch(subcribe_url, {
             method,
             body: JSON.stringify({
                 endpoint: subscription.endpoint,
@@ -116,11 +116,10 @@ else {
             }).catch(function (err) {
                                             console.log(err);
                        });
-
-    }
+        }
 
          // Notification popup will appear when user allowed notification permission.
-         var confirmationDialog = Drupal.dialog('<div class="bpn_message_div" style="display: none !important;"></div>', {
+          var confirmationDialog = Drupal.dialog('<div class="bpn_message_div" style="display: none !important;"></div>', {
           title: Drupal.t('Get the latest updates through website notifications?'),
           dialogClass: 'bpn-model-popup',
           resizable: false,
