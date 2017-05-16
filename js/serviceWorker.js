@@ -2,16 +2,16 @@
  * @file
  * Serviceworker file for browser push notification.
  */
-
+'use strict';
 self.addEventListener('push', function (event) {
-    if (!(self.Notification && self.Notification.permission === 'granted')) {
-        return;
+  if (!(self.Notification && self.Notification.permission === 'granted')) {
+      return;
     }
-console.log('push received');
-const sendNotification = body => {
-var str = body;
-var message_array = str.split('<br>');
-var notificationOptions = {
+// console.log('push received');
+  const sendNotification = body => {
+  var str = body;
+  var message_array = str.split('<br>');
+  var notificationOptions = {
     body: message_array[1],
     icon: message_array[2],
     badge: message_array[2],
