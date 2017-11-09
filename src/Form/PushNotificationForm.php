@@ -67,14 +67,12 @@ class PushNotificationForm extends FormBase {
 
     $form['sendMessage']['icon'] = [
       '#type' => 'textfield',
-      '#required' => TRUE,
       '#title' => $this->t('Notification Image URL'),
       '#description' => $this->t('Enter the Image URL which will show in the Notification.'),
     ];
 
     $form['sendMessage']['url'] = [
       '#type' => 'textfield',
-      '#required' => TRUE,
       '#title' => $this->t('Notification URL'),
       '#description' => $this->t('Enter the URL on which user will redirect after clicking on Notification.Eg.http://example.com/test-contents'),
     ];
@@ -91,10 +89,13 @@ class PushNotificationForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    if (!(filter_var($form_state->getValue('url'), FILTER_VALIDATE_URL))) {
+    $url = $form_state->getValue('url');
+    if (!empty($url) && !(filter_var($url, FILTER_VALIDATE_URL))) {
       $form_state->setErrorByName('url', $this->t('Not a valid url.'));
     }
-    if (!(filter_var($form_state->getValue('icon'), FILTER_VALIDATE_URL))) {
+
+    $icon = $form_state->getValue('icon');
+    if (!empty($icon) && !(filter_var($icon, FILTER_VALIDATE_URL))) {
       $form_state->setErrorByName('icon', $this->t('Not a valid image url.'));
     }
   }
@@ -109,13 +110,8 @@ class PushNotificationForm extends FormBase {
       'body' => $form_state->getValue('body'),
       'icon' => $form_state->getValue('icon'),
       'url' => $form_state->getValue('url'),
-      'created_date' => strtotime(date('Y-m-d H:i:s')),
-      'uid' => $account->id(),
     ];
-    $notification_data = $entry['title'] . '<br>';
-    $notification_data .= $entry['body'] . '<br>';
-    $notification_data .= $entry['icon'] . '<br>';
-    $notification_data .= $entry['url'] . '<br>';
+    $notification_data = implode('<br>', array_filter($entry));
     $subscriptions = SubscriptionsDatastorage::loadAll();
     $bpn_public_key = $this->config('browser_push_notification.settings')->get('bpn_public_key');
     $bpn_private_key = $this->config('browser_push_notification.settings')->get('bpn_private_key');
