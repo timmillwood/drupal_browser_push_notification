@@ -4,6 +4,7 @@ namespace Drupal\browser_push_notification\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Minishlink\WebPush\VAPID;
 
 /**
  * Configure example settings for this site.
@@ -30,6 +31,7 @@ class PushNotificationConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildForm($form, $form_state);
     $config = $this->config('browser_push_notification.settings');
 
     $form['description'] = [
@@ -53,7 +55,13 @@ class PushNotificationConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('bpn_private_key'),
     ];
 
-    return parent::buildForm($form, $form_state);
+    $form['actions']['generate'] = [
+      '#type' => 'submit',
+      '#value' => $config->get('bpn_public_key') ? $this->t('Regenerate keys') : t('Generate keys'),
+      '#submit' => ['::generateKeys'],
+    ];
+
+    return $form;
   }
 
   /**
@@ -66,7 +74,17 @@ class PushNotificationConfigForm extends ConfigFormBase {
       ->set('bpn_public_key', $form_state->getValue('bpn_public_key'))
       ->set('bpn_private_key', $form_state->getValue('bpn_private_key'))
       ->save();
+  }
 
+  /**
+   * Form submission handler for generating keys
+   */
+  public function generateKeys(array &$form, FormStateInterface $form_state) {
+    $keys = VAPID::createVapidKeys();
+    $this->config('browser_push_notification.settings')
+      ->set('bpn_public_key', $keys['publicKey'])
+      ->set('bpn_private_key', $keys['privateKey'])
+      ->save();
   }
 
 }
