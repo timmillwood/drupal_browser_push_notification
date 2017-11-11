@@ -104,7 +104,6 @@ class PushNotificationForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $account = $this->currentUser();
     $entry = [
       'title' => $form_state->getValue('title'),
       'body' => $form_state->getValue('body'),

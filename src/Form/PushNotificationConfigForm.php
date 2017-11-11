@@ -57,7 +57,7 @@ class PushNotificationConfigForm extends ConfigFormBase {
 
     $form['actions']['generate'] = [
       '#type' => 'submit',
-      '#value' => $config->get('bpn_public_key') ? $this->t('Regenerate keys') : t('Generate keys'),
+      '#value' => $config->get('bpn_public_key') ? $this->t('Regenerate keys') : $this->t('Generate keys'),
       '#submit' => ['::generateKeys'],
     ];
 
@@ -77,7 +77,7 @@ class PushNotificationConfigForm extends ConfigFormBase {
   }
 
   /**
-   * Form submission handler for generating keys
+   * Form submission handler for generating keys.
    */
   public function generateKeys(array &$form, FormStateInterface $form_state) {
     $keys = VAPID::createVapidKeys();
