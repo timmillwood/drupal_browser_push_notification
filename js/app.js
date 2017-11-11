@@ -6,7 +6,6 @@
 (function ($, window, Drupal, drupalSettings) {
   'use strict';
   var public_key = drupalSettings.browser_push_notification.bpn_public_key;
-  var baseUrl = (window.location.protocol + '//' + window.location.host) + (drupalSettings.path.baseUrl);
   Drupal.behaviors.browser_push_notification = { // The name of our behavior.
     attach: function (context, settings) {
       var applicationServerKey = public_key;
@@ -30,7 +29,7 @@
         return;
       }
 
-      navigator.serviceWorker.register(baseUrl + 'serviceWorker.js')
+      navigator.serviceWorker.register(drupalSettings.browser_push_notification.path)
       .then(() => {
       }, e => {
       });

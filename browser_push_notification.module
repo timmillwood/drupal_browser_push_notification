@@ -12,6 +12,9 @@ function browser_push_notification_page_attachments_alter(array &$build) {
   $bpn_public_key = \Drupal::config('browser_push_notification.settings')->get('bpn_public_key');
   $build['#attached']['drupalSettings']['browser_push_notification']['bpn_public_key'] = $bpn_public_key;
   if (!empty($bpn_public_key)) {
+    $module_handler = Drupal::service('module_handler');
+    $path = $module_handler->getModule('browser_push_notification')->getPath();
     $build['#attached']['library'][] = 'browser_push_notification/service-worker';
+    $build['#attached']['drupalSettings']['browser_push_notification']['path'] = '/' . $path . '/js/serviceWorker.js';
   }
 }
