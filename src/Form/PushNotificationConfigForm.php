@@ -43,7 +43,6 @@ class PushNotificationConfigForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Public Key'),
       '#maxlength' => 100,
-      '#required' => TRUE,
       '#default_value' => $config->get('bpn_public_key'),
     ];
 
@@ -51,7 +50,6 @@ class PushNotificationConfigForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Private Key'),
       '#maxlength' => 100,
-      '#required' => TRUE,
       '#default_value' => $config->get('bpn_private_key'),
     ];
 
