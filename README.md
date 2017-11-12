@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/timmillwood/drupal_browser_push_notification.svg?branch=8.x-1.x)](https://travis-ci.org/timmillwood/drupal_browser_push_notification)
+
 CONTENTS OF THIS FILE
 ---------------------
    
@@ -49,17 +51,14 @@ INSTALLATION
  * Step 3: Copy js/serviceWorker.js into root of the drupal installation
    Eg:https://www.example.com/serviceWorker.js
 
- * Step 4: Copy Application Publick Key & Private Key from 
-   https://web-push-codelab.appspot.com and set it in browser push notification
-   config settings form.  
+ * Step 4: Generate keys in /admin/config/services/browser_push_notification/config
 
 CONFIGURATION
 -------------
  Browser Push Notification module have below configuration setting page
 
- * Using this URL you have to save application public key & private key.
-   admin/config/services/browser_push_notification/config. Copy key from
-   https://web-push-codelab.appspot.com
+ * Using this URL you have to generate application public key & private key.
+   admin/config/services/browser_push_notification/config.
 
  * Using the below URL you can send the notification to every user
    who have enabled the browser push notification in browser for your site.
