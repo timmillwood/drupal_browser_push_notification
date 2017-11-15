@@ -14,8 +14,8 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
-The Browser Push Notification module send push notification to web browsers
-using Push Api and service-worker.
+The Browser Push Notification module send push notification to web
+browsers using Push Api and service-worker.
 
  * For a full description of the module, visit the project page:
    https://drupal.org/project/browser_push_notification
@@ -26,10 +26,11 @@ using Push Api and service-worker.
 REQUIREMENTS
 ------------
 
-  - SSL certificate is mandatory : Push notification will only work on domain 
-    with SSL enabled.
+  - SSL certificate is mandatory : Push notification will only work on
+    domain with SSL enabled.
 
-  - Web Push library for PHP (https://github.com/web-push-libs/web-push-php)
+  - Web Push library for PHP
+    (https://github.com/web-push-libs/web-push-php)
 
   - Only supported in following Web Browsers:
     - Chrome:52 or Above
@@ -44,35 +45,37 @@ INSTALLATION
    For more details 
    https://github.com/web-push-libs/web-push-php
 
- * Step 2: Install as you would normally install a contributed Drupal module. 
-   See: https://www.drupal.org/docs/8/extending-drupal-8/installing-modules
+ * Step 2: Install as you would normally install a contributed Drupal
+   module. See:
+   https://www.drupal.org/docs/8/extending-drupal-8/installing-modules
    for further information.
 
  * Step 3: Copy js/serviceWorker.js into root of the drupal installation
    Eg:https://www.example.com/serviceWorker.js
 
- * Step 4: Generate keys in /admin/config/services/browser_push_notification/config
+ * Step 4: Generate keys in
+   /admin/config/services/browser_push_notification/config
 
 CONFIGURATION
 -------------
  Browser Push Notification module have below configuration setting page
 
- * Using this URL you have to generate application public key & private key.
+ * Generate application public key & private key at 
    admin/config/services/browser_push_notification/config.
 
- * Using the below URL you can send the notification to every user
-   who have enabled the browser push notification in browser for your site.
+ * Using the below URL you can send the notification to every user who
+   have enabled the browser push notification in browser for your site.
    /admin/config/services/browser_push_notification/send_notification
 
- * Using the Below URL user can check the list of the User who have subscribed
-   browser push notification.
+ * Using the Below URL user can check the list of the User who have
+   subscribed browser push notification.
    /admin/config/services/browser_push_notification/subscription_list
 
  * Using the permission 'Administer Browser Push Notification',
-   User with administer permission will be able to manage  configuration and 
-   send push notification.  
+   User with administer permission will be able to manage  configuration
+   and send push notification.
 
- 
+
 
 TROUBLESHOOTING
 ---------------
@@ -82,8 +85,8 @@ TROUBLESHOOTING
    c. Open SSL library with version
    d. curl
 
-  * Install gmp version for php 5.6, if your PHP version is 5.6 and if the 
-    PHP version is 7,then install gmp version for php7.
+  * Install gmp version for php 5.6, if your PHP version is 5.6 and if
+    the PHP version is 7,then install gmp version for php7.
 
   * Ubuntu php version 5.6 gmp installation.
     sudo apt install php5.6-gmp

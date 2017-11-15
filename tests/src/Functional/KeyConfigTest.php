@@ -13,6 +13,9 @@ class KeyConfigTest extends BrowserTestBase {
 
   public static $modules = ['browser_push_notification'];
 
+  /**
+   * Tests generating and regenerating keys.
+   */
   public function testKeyConfig() {
     $this->drupalLogin($this->rootUser);
     $this->drupalGet('/admin/config/services/browser_push_notification/config');
